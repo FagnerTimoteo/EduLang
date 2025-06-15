@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "Lição 1: Variáveis",
+    "content": "Em linguagens de programação existem variáveis. String armazena textos, Int armazena inteiros, e Double armazena números reais (decimais).",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "Qual o tipo da variável: 1?",
+        "type": "MULTIPLE_CHOICE",
+        "options": ["String", "Int", "Double"],
+        "correctAnswer": "Int"
+      },
+      {
+        "id": 2,
+        "questionText": "Escreva o tipo da variável: \"dois\"",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "String"
+      }
+    ]
+  }
+]
