@@ -1,4 +1,4 @@
-package com.example.edulang.model
+package com.example.edulang.data.model
 
 class Lesson (
     val id: Int,
