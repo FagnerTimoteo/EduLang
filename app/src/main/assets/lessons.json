@@ -19,5 +19,26 @@
         "correctAnswer": "String"
       }
     ]
+  },
+  {
+    "id": 2,
+    "title": "Lição 2: Variáveis",
+    "content": "TESTE.",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "TESTE: 1?",
+        "type": "MULTIPLE_CHOICE",
+        "options": ["String", "Int", "Double"],
+        "correctAnswer": "Int"
+      },
+      {
+        "id": 2,
+        "questionText": "TESTE: \"dois\"",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "String"
+      }
+    ]
   }
 ]
