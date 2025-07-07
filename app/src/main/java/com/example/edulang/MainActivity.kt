@@ -13,6 +13,8 @@ import com.example.edulang.databinding.ActivityMainBinding
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 
+import com.example.edulang.util.Progress.recoverProgress
+
 class MainActivity : ComponentActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var lessonAdapter: LessonAdapter
@@ -25,8 +27,13 @@ class MainActivity : ComponentActivity() {
 
         // Atualizar barra de progresso de lições
         val lessons = loadLessons(this)
-        val lessonsCompleted = 0 //TODO
-        val progress = ((lessonsCompleted + 1) * 100) / lessons.size
+
+        // A variável recebe a quantidade de lições com todas questões respondidas corretamente.
+        val lessonsCompleted = lessons.count { lesson ->
+            lesson.questions.all { recoverProgress(this, it.id) }
+        }
+
+        val progress = (lessonsCompleted * 100) / lessons.size
         binding.progressBar.progress = progress
 
         // Atualizar texto da barra de progresso de lições
@@ -59,25 +66,4 @@ class MainActivity : ComponentActivity() {
         val type = object : TypeToken<List<Lesson>>() {}.type
         return Gson().fromJson(json, type)
     }
-
-    fun salvarResposta(context: Context, questionId: Int, resposta: String) {
-        val prefs = context.getSharedPreferences("respostas", MODE_PRIVATE)
-        prefs.edit().putString("resposta_$questionId", resposta).apply()
-    }
-
-    fun obterResposta(context: Context, questionId: Int): String? {
-        val prefs = context.getSharedPreferences("respostas", MODE_PRIVATE)
-        return prefs.getString("resposta_$questionId", null)
-    }
 }
-
-/*
-
-        val questions1 = lessons[0].questions
-        val questions2 = lessons[1].questions
-
-        Log.i("MAIN", "progress: $progress")
-        Log.i("MAIN", "lessons[0].title: ${lessons[0].title}")
-        Log.i("MAIN", "questions1: $questions1")
-        Log.i("MAIN", "questions2: $questions2")
-        */

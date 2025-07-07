@@ -27,6 +27,7 @@ class LessonActivity : ComponentActivity()  {
         val lessonId = intent.getIntExtra("lessonId", -1)
         val lessons = loadLessons(this)
         val lesson = lessons.find { it.id == lessonId }
+        val contentLesson = lesson?.content // O texto da lição
         val lessonQuestions =  lesson?.questions ?: emptyList()
 
         // Atualizar texto da barra de progresso de questões
@@ -45,7 +46,8 @@ class LessonActivity : ComponentActivity()  {
 
         questionAdapter = QuestionAdapter(lessonQuestions, assets) { question ->
             val intent = Intent(this, QuestionActivity::class.java)
-            intent.putExtra("question", question)
+            intent.putExtra("questionId", question.id)
+            intent.putExtra("lessonId", lessonId) // Adicione isso também
             startActivity(intent)
         }
 
