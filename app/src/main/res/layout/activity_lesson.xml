@@ -19,15 +19,20 @@
             android:layout_height="100sp"
             android:max="100"
             android:progress="0"
-            android:progressTint="@color/black"
+            android:progressTint="@color/green"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/lessonsText"
+            android:id="@+id/lessonText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="Lorem ipsum dolor sit amet, consectetur"
+            android:textSize="32sp"
+            android:textColor="#FFFF00"
+            android:typeface="sans"
+            android:textStyle="bold"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="@+id/progressBar"
             app:layout_constraintStart_toStartOf="@+id/progressBar"

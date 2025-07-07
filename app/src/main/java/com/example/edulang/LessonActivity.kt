@@ -2,6 +2,8 @@ package com.example.edulang
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,17 +23,27 @@ class LessonActivity : ComponentActivity()  {
         binding = ActivityLessonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Obtém a lição
         val lessonId = intent.getIntExtra("lessonId", -1)
         val lessons = loadLessons(this)
         val lesson = lessons.find { it.id == lessonId }
+        val lessonQuestions =  lesson?.questions ?: emptyList()
 
-        val lessonQuestions =   lesson?.questions ?: emptyList()
+        // Atualizar texto da barra de progresso de questões
+        val lessonText = binding.lessonText
+        lessonText.text = lesson?.title ?: "Error"
 
-        binding.lessonsText.text = lesson?.title ?: "Error"
+        // Estilizar barra de progresso de questões
+        val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
+        lessonText.typeface = typeface
+        lessonText.textSize = 32f
+        lessonText.setTextColor(Color.YELLOW)
+        lessonText.setShadowLayer(20f, 0f, 0f, Color.BLACK)
 
+        // Recycle das questões
         val recyclerView = binding.recyclerView
 
-        questionAdapter = QuestionAdapter(lessonQuestions) { question ->
+        questionAdapter = QuestionAdapter(lessonQuestions, assets) { question ->
             val intent = Intent(this, QuestionActivity::class.java)
             intent.putExtra("question", question)
             startActivity(intent)
