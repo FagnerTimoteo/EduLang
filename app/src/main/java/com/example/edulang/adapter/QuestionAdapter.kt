@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.edulang.R
 import com.example.edulang.data.model.Question
+import com.example.edulang.util.setDynamicTextSize
 
 class QuestionAdapter(
     private val questions: List<Question>,
@@ -38,7 +39,7 @@ class QuestionAdapter(
         // Estilizar barra de progresso
         val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
         barText.typeface = typeface
-        barText.textSize = 32f
+        barText.setDynamicTextSize(question.questionText, 32f, 16f)
         barText.setTextColor(Color.YELLOW)
         barText.setShadowLayer(20f, 0f, 0f, Color.BLACK)
 

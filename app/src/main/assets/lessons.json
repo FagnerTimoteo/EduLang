@@ -20,24 +20,67 @@
       }
     ]
   },
+
   {
     "id": 2,
-    "title": "Lição 2: Variáveis",
-    "content": "TESTE.",
+    "title": "Lição 2: Fundamentos do Python",
+    "content": "Python é uma linguagem de programação conhecida por sua simplicidade e legibilidade. Vamos começar com o básico: exibir mensagens e declarar variáveis.",
     "questions": [
       {
         "id": 1,
-        "questionText": "TESTE: 1?",
-        "type": "MULTIPLE_CHOICE",
-        "options": ["String", "Int", "Double"],
-        "correctAnswer": "Int"
+        "questionText": "Qual a palavra-chave para exibir um texto na tela em Python?",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "print"
       },
       {
         "id": 2,
-        "questionText": "TESTE: \"dois\"",
+        "questionText": "Qual o tipo de dado da variável `preco = 19.99`?",
+        "type": "MULTIPLE_CHOICE",
+        "options": ["int", "str", "float"],
+        "correctAnswer": "float"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Lição 3: Condicionais",
+    "content": "Condicionais permitem que o programa tome decisões. A estrutura `if` executa um bloco de código se uma condição for verdadeira. Use `elif` para testar outra condição e `else` para um caso padrão.",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "Qual operador usamos para verificar se dois valores são iguais?",
+        "type": "MULTIPLE_CHOICE",
+        "options": ["=", "==", "!= "],
+        "correctAnswer": "=="
+      },
+      {
+        "id": 2,
+        "questionText": "Qual palavra-chave usamos para a parte 'senão se' de uma condicional?",
         "type": "TEXT_INPUT",
         "options": null,
-        "correctAnswer": "String"
+        "correctAnswer": "elif"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Lição 4: Loops",
+    "content": "Loops são usados para repetir um bloco de código. O loop `while` repete enquanto uma condição for verdadeira, e o loop `for` é usado para iterar sobre uma sequência de itens.",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "Qual loop é mais adequado para repetir uma ação um número fixo de vezes?",
+        "type": "MULTIPLE_CHOICE",
+        "options": ["while", "for", "if"],
+        "correctAnswer": "for"
+      },
+      {
+        "id": 2,
+        "questionText": "O que acontece se a condição de um loop `while` nunca se tornar falsa?",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "loop infinito"
       }
     ]
   }
