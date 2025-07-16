@@ -85,7 +85,7 @@ class QuestionActivity : ComponentActivity() {
 
             if (isCorrect) {
                 // Salva o progresso e mostra feedback
-                saveProgress(this, question.id)
+                saveProgress(this, lessonId, question.id)
                 val toast = Toast.makeText(this, "Correto!", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()

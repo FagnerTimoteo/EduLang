@@ -34,7 +34,8 @@ class QuestionAdapter(
 
         // Texto da barra de progresso
         val barText = holder.title
-        barText.text = question.questionText
+        val formattedQuestionTitle = "Questão ${question.id}: ${question.questionText}"
+        barText.text = formattedQuestionTitle
 
         // Estilizar barra de progresso
         val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")

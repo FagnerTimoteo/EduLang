@@ -12,6 +12,7 @@ import com.example.edulang.data.model.Lesson
 import com.example.edulang.databinding.ActivityLessonBinding
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.example.edulang.util.setDynamicTextSize // Importe a função de extensão
 
 class LessonActivity : ComponentActivity()  {
     private lateinit var binding: ActivityLessonBinding
@@ -23,31 +24,32 @@ class LessonActivity : ComponentActivity()  {
         binding = ActivityLessonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtém a lição
         val lessonId = intent.getIntExtra("lessonId", -1)
         val lessons = loadLessons(this)
         val lesson = lessons.find { it.id == lessonId }
         val contentLesson = lesson?.content // O texto da lição
-        val lessonQuestions =  lesson?.questions ?: emptyList()
 
-        // Atualizar texto da barra de progresso de questões
         val lessonText = binding.lessonText
-        lessonText.text = lesson?.title ?: "Error"
+        val titleContent = lesson?.title ?: "Error"
+        lessonText.text = titleContent
 
-        // Estilizar barra de progresso de questões
+        // Estilizar barra de progresso de questões (cores, fonte e sombra)
         val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
         lessonText.typeface = typeface
-        lessonText.textSize = 32f
+        // lessonText.textSize = 32f // REMOVA ou COMENTE esta linha
         lessonText.setTextColor(Color.YELLOW)
         lessonText.setShadowLayer(20f, 0f, 0f, Color.BLACK)
 
-        // Recycle das questões
+        // Chame a função para ajustar APENAS o tamanho do texto dinamicamente
+        lessonText.setDynamicTextSize(titleContent, 32f, 18f)
+
+        val lessonQuestions =  lesson?.questions ?: emptyList()
         val recyclerView = binding.recyclerView
 
         questionAdapter = QuestionAdapter(lessonQuestions, assets) { question ->
             val intent = Intent(this, QuestionActivity::class.java)
             intent.putExtra("questionId", question.id)
-            intent.putExtra("lessonId", lessonId) // Adicione isso também
+            intent.putExtra("lessonId", lessonId)
             startActivity(intent)
         }
 
