@@ -3,7 +3,6 @@ package com.example.edulang
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,45 +11,65 @@ import com.example.edulang.data.model.Lesson
 import com.example.edulang.databinding.ActivityLessonBinding
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.example.edulang.util.applyDynamicTitleStyle
 
 class LessonActivity : ComponentActivity()  {
     private lateinit var binding: ActivityLessonBinding
     private lateinit var questionAdapter: QuestionAdapter
+    private lateinit var lessons: List<Lesson>
+    private var lessonId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityLessonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtém a lição
-        val lessonId = intent.getIntExtra("lessonId", -1)
-        val lessons = loadLessons(this)
+        lessonId = intent.getIntExtra("lessonId", -1)
+        lessons = loadLessons(this)
+
+        setupLessonUI()
+        setupQuestionsList()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        questionAdapter.notifyDataSetChanged()
+    }
+
+    private fun setupLessonUI() {
         val lesson = lessons.find { it.id == lessonId }
-        val contentLesson = lesson?.content // O texto da lição
-        val lessonQuestions =  lesson?.questions ?: emptyList()
+        val titleContent = lesson?.title ?: "Error"
 
-        // Atualizar texto da barra de progresso de questões
         val lessonText = binding.lessonText
-        lessonText.text = lesson?.title ?: "Error"
+        lessonText.text = titleContent
+        lessonText.applyDynamicTitleStyle(
+            textToFit = titleContent,
+            maxTextSizeSp = 32f,
+            minTextSizeSp = 18f,
+            textColorResId = R.color.yellow,
+            shadowRadius = 20f,
+            shadowColor = Color.BLACK,
+            fontAssetPath = "fonts/KGHAPPYSolid.ttf"
+        )
 
-        // Estilizar barra de progresso de questões
-        val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
-        lessonText.typeface = typeface
-        lessonText.textSize = 32f
-        lessonText.setTextColor(Color.YELLOW)
-        lessonText.setShadowLayer(20f, 0f, 0f, Color.BLACK)
+    }
 
-        // Recycle das questões
+    private fun setupQuestionsList() {
+        val lesson = lessons.find { it.id == lessonId }
+        val lessonQuestions =  lesson?.questions ?: emptyList()
         val recyclerView = binding.recyclerView
 
-        questionAdapter = QuestionAdapter(lessonQuestions, assets) { question ->
+        questionAdapter = QuestionAdapter(
+            this,
+            lessonQuestions,
+            this.assets, // Passando o AssetManager do Context
+            lessonId
+        ) { question ->
             val intent = Intent(this, QuestionActivity::class.java)
             intent.putExtra("questionId", question.id)
-            intent.putExtra("lessonId", lessonId) // Adicione isso também
+            intent.putExtra("lessonId", lessonId)
             startActivity(intent)
         }
-
         recyclerView.adapter = questionAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
     }

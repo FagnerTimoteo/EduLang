@@ -29,14 +29,14 @@
             android:layout_height="wrap_content"
             android:text="Lorem ipsum dolor sit amet, consectetur"
             android:textSize="32sp"
-            android:textColor="#FFFF00"
+            android:textColor="@color/yellow"
             android:typeface="sans"
             android:textStyle="bold"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="@+id/progressBar"
             app:layout_constraintStart_toStartOf="@+id/progressBar"
-            app:layout_constraintTop_toTopOf="@+id/progressBar" />
+            app:layout_constraintTop_toTopOf="@+id/progressBar"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

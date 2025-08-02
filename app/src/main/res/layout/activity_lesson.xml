@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="Lorem ipsum dolor sit amet, consectetur"
             android:textSize="32sp"
-            android:textColor="#FFFF00"
+            android:textColor="@color/yellow"
             android:typeface="sans"
             android:textStyle="bold"
             android:gravity="center"

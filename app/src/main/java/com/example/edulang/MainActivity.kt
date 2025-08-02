@@ -3,7 +3,6 @@ package com.example.edulang
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,53 +11,62 @@ import com.example.edulang.data.model.Lesson
 import com.example.edulang.databinding.ActivityMainBinding
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
-
 import com.example.edulang.util.Progress.recoverProgress
+import com.example.edulang.util.applyDynamicTitleStyle // Importe a nova função
 
 class MainActivity : ComponentActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var lessonAdapter: LessonAdapter
+    private lateinit var allLessons: List<Lesson>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Atualizar barra de progresso de lições
-        val lessons = loadLessons(this)
+        allLessons = loadLessons(this)
 
-        // A variável recebe a quantidade de lições com todas questões respondidas corretamente.
-        val lessonsCompleted = lessons.count { lesson ->
-            lesson.questions.all { recoverProgress(this, it.id) }
-        }
-
-        val progress = (lessonsCompleted * 100) / lessons.size
-        binding.progressBar.progress = progress
-
-        // Atualizar texto da barra de progresso de lições
-        val lessonsText = "Lições: $lessonsCompleted/${lessons.size}"
-        val textView = binding.lessonText
-        textView.text = lessonsText
-
-        // Estilizar barra de progresso de lições
-        val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
-        textView.typeface = typeface
-        textView.textSize = 32f
-        textView.setTextColor(Color.YELLOW)
-        textView.setShadowLayer(20f, 0f, 0f, Color.BLACK)
-
-        // Recycle das lições
         val recyclerView = binding.recyclerView
-
-        lessonAdapter = LessonAdapter(lessons, assets) { lesson ->
+        lessonAdapter = LessonAdapter(allLessons, assets) { lesson ->
             val intent = Intent(this, LessonActivity::class.java)
             intent.putExtra("lessonId", lesson.id)
             startActivity(intent)
         }
-
         recyclerView.adapter = lessonAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateProgressBar()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // clearProgress(this)
+    }
+
+    private fun updateProgressBar() {
+        val lessonsCompleted = allLessons.count { lesson ->
+            lesson.questions.all { question -> recoverProgress(this, lesson.id, question.id) }
+        }
+
+        val progress = (lessonsCompleted * 100) / allLessons.size
+        binding.progressBar.progress = progress
+
+        val lessonsText = "Lições: $lessonsCompleted/${allLessons.size}"
+        val textView = binding.lessonText
+        textView.text = lessonsText
+
+        textView.applyDynamicTitleStyle(
+            textToFit = lessonsText,
+            maxTextSizeSp = 32f,
+            minTextSizeSp = 18f,
+            textColorResId = R.color.yellow,
+            shadowRadius = 20f,
+            shadowColor = Color.BLACK,
+            fontAssetPath = "fonts/KGHAPPYSolid.ttf"
+        )
     }
 
     private fun loadLessons(context: Context): List<Lesson> {
