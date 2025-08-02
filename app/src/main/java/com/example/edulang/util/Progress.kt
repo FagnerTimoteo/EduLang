@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Context.MODE_PRIVATE
 
 object Progress {
-
     // A chave agora inclui o lessonId e questionId para ser única
     private fun getProgressKey(lessonId: Int, questionId: Int): String {
         return "lesson_${lessonId}_question_${questionId}"
@@ -22,9 +21,16 @@ object Progress {
         return prefs.getBoolean(getProgressKey(lessonId, questionId), false)
     }
 
-    // Limpa todo o progresso armazenado
-    fun clearProgress(context: Context) {
+    // Recupera o progresso de uma liçao e depois salva em sharedPreferences
+    fun recoverLessonProgress(context: Context, lessonId: Int, totalQuestions: Int): Boolean {
         val prefs = context.getSharedPreferences("respostas", MODE_PRIVATE)
-        prefs.edit().clear().apply()
+
+        for (questionId in 1..totalQuestions) {
+            val key = "lesson_${lessonId}_question_${questionId}"
+            val answered = prefs.getBoolean(key, false)
+            if (!answered) return false
+        }
+
+        return true
     }
 }

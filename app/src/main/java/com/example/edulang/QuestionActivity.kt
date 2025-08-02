@@ -87,7 +87,6 @@ class QuestionActivity : ComponentActivity() {
             val isCorrect = userAnswer == question.correctAnswer.trim().lowercase()
 
             if (isCorrect) {
-                // Linha 88 (ou próxima) - Chamada corrigida da função
                 saveProgress(this, lessonId, question.id)
                 val toast = Toast.makeText(this, "Correto!", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)

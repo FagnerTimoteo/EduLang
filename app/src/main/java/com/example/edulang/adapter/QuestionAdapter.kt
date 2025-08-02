@@ -1,12 +1,13 @@
 package com.example.edulang.adapter
 
 import android.content.Context
-import android.content.res.AssetManager
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.edulang.R
 import com.example.edulang.data.model.Question
@@ -16,13 +17,13 @@ import com.example.edulang.util.applyDynamicTitleStyle
 class QuestionAdapter(
     private val context: Context,
     private val questions: List<Question>,
-    private val assets: AssetManager,
     private val lessonId: Int,
     private val setOnClickListener: (Question) -> Unit) :
     RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
 
     class QuestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.title)
+        val progressBar: ProgressBar = itemView.findViewById(R.id.progressBar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
@@ -38,35 +39,24 @@ class QuestionAdapter(
         val formattedQuestionTitle = "Questão ${question.id}: ${question.questionText}"
         barText.text = formattedQuestionTitle
 
-        val isCompleted = recoverProgress(context, lessonId, question.id)
+        barText.applyDynamicTitleStyle(
+            textToFit = formattedQuestionTitle,
+            maxTextSizeSp = 20f,
+            minTextSizeSp = 16f,
+            textColorResId = R.color.yellow,
+            shadowRadius = 20f,
+            shadowColor = Color.BLACK,
+            fontAssetPath = "fonts/KGHAPPYSolid.ttf"
+        )
 
-        if (isCompleted) {
-            holder.itemView.isClickable = false
-            holder.itemView.alpha = 0.5f
-            barText.applyDynamicTitleStyle(
-                textToFit = formattedQuestionTitle,
-                maxTextSizeSp = 20f,
-                minTextSizeSp = 16f,
-                textColorResId = R.color.green,
-                shadowRadius = 20f,
-                shadowColor = Color.BLACK,
-                fontAssetPath = "fonts/KGHAPPYSolid.ttf"
-            )
-        } else {
-            holder.itemView.isClickable = true
-            holder.itemView.alpha = 1.0f
-            barText.applyDynamicTitleStyle(
-                textToFit = formattedQuestionTitle,
-                maxTextSizeSp = 20f,
-                minTextSizeSp = 16f,
-                textColorResId = R.color.yellow,
-                shadowRadius = 20f,
-                shadowColor = Color.BLACK,
-                fontAssetPath = "fonts/KGHAPPYSolid.ttf"
-            )
-            holder.itemView.setOnClickListener {
+        val isCompleted = recoverProgress(context, lessonId, question.id)
+        holder.progressBar.progress = if (isCompleted) 100 else 0
+
+        holder.itemView.setOnClickListener {
+            if (!isCompleted)
                 setOnClickListener(question)
-            }
+            else
+                Toast.makeText(context, "Está questão já está concluída.", Toast.LENGTH_SHORT).show()
         }
     }
 

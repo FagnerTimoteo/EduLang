@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.edulang.adapter.QuestionAdapter
 import com.example.edulang.data.model.Lesson
 import com.example.edulang.databinding.ActivityLessonBinding
+import com.example.edulang.util.Progress.recoverLessonProgress
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.example.edulang.util.applyDynamicTitleStyle
@@ -27,13 +28,26 @@ class LessonActivity : ComponentActivity()  {
         lessonId = intent.getIntExtra("lessonId", -1)
         lessons = loadLessons(this)
 
+        updateProgressBar()
         setupLessonUI()
         setupQuestionsList()
     }
 
     override fun onResume() {
         super.onResume()
+        updateProgressBar()
         questionAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateProgressBar() {
+        lessonId = intent.getIntExtra("lessonId", -1)
+        lessons = loadLessons(this)
+
+        val lesson = lessons.find { it.id == lessonId }
+        val numQuestions: Int = lesson?.questions?.size ?: 0
+        val isCompleted = recoverLessonProgress(this, lessonId, numQuestions)
+
+        binding.progressBar.progress = if (isCompleted) 100 else 0
     }
 
     private fun setupLessonUI() {
@@ -51,7 +65,6 @@ class LessonActivity : ComponentActivity()  {
             shadowColor = Color.BLACK,
             fontAssetPath = "fonts/KGHAPPYSolid.ttf"
         )
-
     }
 
     private fun setupQuestionsList() {
@@ -62,7 +75,6 @@ class LessonActivity : ComponentActivity()  {
         questionAdapter = QuestionAdapter(
             this,
             lessonQuestions,
-            this.assets, // Passando o AssetManager do Context
             lessonId
         ) { question ->
             val intent = Intent(this, QuestionActivity::class.java)

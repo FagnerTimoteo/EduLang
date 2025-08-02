@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
         allLessons = loadLessons(this)
 
         val recyclerView = binding.recyclerView
-        lessonAdapter = LessonAdapter(allLessons, assets) { lesson ->
+        lessonAdapter = LessonAdapter(allLessons) { lesson ->
             val intent = Intent(this, LessonActivity::class.java)
             intent.putExtra("lessonId", lesson.id)
             startActivity(intent)
@@ -39,11 +39,6 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         updateProgressBar()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // clearProgress(this)
     }
 
     private fun updateProgressBar() {

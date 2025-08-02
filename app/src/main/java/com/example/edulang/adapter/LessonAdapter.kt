@@ -1,6 +1,5 @@
 package com.example.edulang.adapter
 
-import android.content.res.AssetManager
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +10,9 @@ import com.example.edulang.R
 import com.example.edulang.data.model.Lesson
 import com.example.edulang.util.applyDynamicTitleStyle
 
-class LessonAdapter(private val lessons: List<Lesson>,
-                    private val  assets: AssetManager,
-                    private val setOnClickListener: (Lesson) -> Unit) :
+class LessonAdapter(
+    private val lessons: List<Lesson>,
+    private val setOnClickListener: (Lesson) -> Unit) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
 
     class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
