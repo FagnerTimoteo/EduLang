@@ -1,8 +1,6 @@
 package com.example.edulang.adapter
 
-import android.content.res.AssetManager
 import android.graphics.Color
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.edulang.R
 import com.example.edulang.data.model.Lesson
-import com.example.edulang.util.setDynamicTextSize
+import com.example.edulang.util.applyDynamicTitleStyle
 
-class LessonAdapter(private val lessons: List<Lesson>,
-                    private val  assets: AssetManager,
-                    private val setOnClickListener: (Lesson) -> Unit) :
+class LessonAdapter(
+    private val lessons: List<Lesson>,
+    private val setOnClickListener: (Lesson) -> Unit) :
     RecyclerView.Adapter<LessonAdapter.LessonViewHolder>() {
 
     class LessonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,21 +28,22 @@ class LessonAdapter(private val lessons: List<Lesson>,
     override fun onBindViewHolder(holder: LessonViewHolder, position: Int) {
         val lesson = lessons[position]
 
-        // Texto da barra de progresso
         val barText = holder.title
         barText.text = lesson.title
 
-        // Estilizar barra de progresso
-        val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
-        barText.typeface = typeface
-        barText.setDynamicTextSize(lesson.title, 32f, 16f)
-        barText.setTextColor(Color.YELLOW)
-        barText.setShadowLayer(20f, 0f, 0f, Color.BLACK)
+        barText.applyDynamicTitleStyle(
+            textToFit = lesson.title,
+            maxTextSizeSp = 16f,
+            minTextSizeSp = 12f,
+            textColorResId = R.color.yellow,
+            shadowRadius = 20f,
+            shadowColor = Color.BLACK,
+            fontAssetPath = "fonts/KGHAPPYSolid.ttf"
+        )
 
         holder.itemView.setOnClickListener {
             setOnClickListener(lesson)
         }
     }
-
     override fun getItemCount(): Int = lessons.size
 }

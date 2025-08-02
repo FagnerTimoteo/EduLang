@@ -2,6 +2,7 @@ package com.example.edulang
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
@@ -38,10 +39,15 @@ class QuestionActivity : ComponentActivity() {
             return
         }
 
-        // Exibe o texto da questão
-        binding.questionText.text = question.questionText
+        val questionTextContent = question.questionText
+        binding.questionText.text = questionTextContent
 
-        // Lógica para lidar com os tipos de questão
+        // Estilo dinâmico para o texto da questão
+        val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
+        binding.questionText.typeface = typeface
+        binding.questionText.setTextColor(ContextCompat.getColor(this, R.color.yellow))
+        binding.questionText.setShadowLayer(20f, 0f, 0f, Color.BLACK)
+
         when (question.type) {
             QuestionType.MULTIPLE_CHOICE -> {
                 binding.radioGroupOptions.visibility = View.VISIBLE
@@ -49,21 +55,20 @@ class QuestionActivity : ComponentActivity() {
                     val radioButton = RadioButton(this)
                     radioButton.text = option
                     radioButton.textSize = 18f
-                    radioButton.setTextColor(Color.WHITE)
-
-                    // Altera a cor do botão (círculo)
+                    radioButton.typeface = typeface
+                    radioButton.setTextColor(ContextCompat.getColor(this, R.color.black))
                     val colorStateList = ContextCompat.getColorStateList(this, R.color.green)
                     radioButton.buttonTintList = colorStateList
-
                     binding.radioGroupOptions.addView(radioButton)
                 }
             }
             QuestionType.TEXT_INPUT -> {
                 binding.answerInput.visibility = View.VISIBLE
+                binding.answerInput.typeface = typeface
+                binding.answerInput.setTextColor(ContextCompat.getColor(this, R.color.black))
             }
         }
 
-        // Ação do botão de envio
         binding.submitButton.setOnClickListener {
             val userAnswer = when (question.type) {
                 QuestionType.MULTIPLE_CHOICE -> {
@@ -80,16 +85,14 @@ class QuestionActivity : ComponentActivity() {
                 }
             }?.trim()?.lowercase() ?: ""
 
-            // Validação da resposta
             val isCorrect = userAnswer == question.correctAnswer.trim().lowercase()
 
             if (isCorrect) {
-                // Salva o progresso e mostra feedback
                 saveProgress(this, lessonId, question.id)
                 val toast = Toast.makeText(this, "Correto!", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)
                 toast.show()
-                finish() // Volta para a LessonActivity
+                finish()
             } else {
                 val toast = Toast.makeText(this, "Incorreto. Tente novamente.", Toast.LENGTH_SHORT)
                 toast.setGravity(Gravity.CENTER, 0, 0)

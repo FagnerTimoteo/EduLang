@@ -3,50 +3,80 @@ package com.example.edulang
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.edulang.adapter.QuestionAdapter
 import com.example.edulang.data.model.Lesson
 import com.example.edulang.databinding.ActivityLessonBinding
+import com.example.edulang.util.Progress.recoverLessonProgress
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
-import com.example.edulang.util.setDynamicTextSize // Importe a função de extensão
+import com.example.edulang.util.applyDynamicTitleStyle
 
 class LessonActivity : ComponentActivity()  {
     private lateinit var binding: ActivityLessonBinding
     private lateinit var questionAdapter: QuestionAdapter
+    private lateinit var lessons: List<Lesson>
+    private var lessonId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityLessonBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val lessonId = intent.getIntExtra("lessonId", -1)
-        val lessons = loadLessons(this)
+        lessonId = intent.getIntExtra("lessonId", -1)
+        lessons = loadLessons(this)
+
+        updateProgressBar()
+        setupLessonUI()
+        setupQuestionsList()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateProgressBar()
+        questionAdapter.notifyDataSetChanged()
+    }
+
+    private fun updateProgressBar() {
+        lessonId = intent.getIntExtra("lessonId", -1)
+        lessons = loadLessons(this)
+
         val lesson = lessons.find { it.id == lessonId }
-        val contentLesson = lesson?.content // O texto da lição
+        val numQuestions: Int = lesson?.questions?.size ?: 0
+        val isCompleted = recoverLessonProgress(this, lessonId, numQuestions)
+
+        binding.progressBar.progress = if (isCompleted) 100 else 0
+    }
+
+    private fun setupLessonUI() {
+        val lesson = lessons.find { it.id == lessonId }
+        val titleContent = lesson?.title ?: "Error"
 
         val lessonText = binding.lessonText
-        val titleContent = lesson?.title ?: "Error"
         lessonText.text = titleContent
+        lessonText.applyDynamicTitleStyle(
+            textToFit = titleContent,
+            maxTextSizeSp = 32f,
+            minTextSizeSp = 18f,
+            textColorResId = R.color.yellow,
+            shadowRadius = 20f,
+            shadowColor = Color.BLACK,
+            fontAssetPath = "fonts/KGHAPPYSolid.ttf"
+        )
+    }
 
-        // Estilizar barra de progresso de questões (cores, fonte e sombra)
-        val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
-        lessonText.typeface = typeface
-        // lessonText.textSize = 32f // REMOVA ou COMENTE esta linha
-        lessonText.setTextColor(Color.YELLOW)
-        lessonText.setShadowLayer(20f, 0f, 0f, Color.BLACK)
-
-        // Chame a função para ajustar APENAS o tamanho do texto dinamicamente
-        lessonText.setDynamicTextSize(titleContent, 32f, 18f)
-
+    private fun setupQuestionsList() {
+        val lesson = lessons.find { it.id == lessonId }
         val lessonQuestions =  lesson?.questions ?: emptyList()
         val recyclerView = binding.recyclerView
 
-        questionAdapter = QuestionAdapter(lessonQuestions, assets) { question ->
+        questionAdapter = QuestionAdapter(
+            this,
+            lessonQuestions,
+            lessonId
+        ) { question ->
             val intent = Intent(this, QuestionActivity::class.java)
             intent.putExtra("questionId", question.id)
             intent.putExtra("lessonId", lessonId)

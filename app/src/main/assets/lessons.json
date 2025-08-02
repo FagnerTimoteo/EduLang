@@ -78,9 +78,9 @@
       {
         "id": 2,
         "questionText": "O que acontece se a condição de um loop `while` nunca se tornar falsa?",
-        "type": "TEXT_INPUT",
-        "options": null,
-        "correctAnswer": "loop infinito"
+        "type": "MULTIPLE_CHOICE",
+        "options": ["Loop infinito", "Nada", "Nunca começará"],
+        "correctAnswer": "Loop infinito"
       }
     ]
   }

@@ -3,19 +3,16 @@ package com.example.edulang
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.edulang.adapter.LessonAdapter
 import com.example.edulang.data.model.Lesson
 import com.example.edulang.databinding.ActivityMainBinding
-import com.example.edulang.util.Progress
-import com.example.edulang.util.Progress.clearProgress
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.example.edulang.util.Progress.recoverProgress
-import com.example.edulang.util.setDynamicTextSize
+import com.example.edulang.util.applyDynamicTitleStyle // Importe a nova função
 
 class MainActivity : ComponentActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -30,7 +27,7 @@ class MainActivity : ComponentActivity() {
         allLessons = loadLessons(this)
 
         val recyclerView = binding.recyclerView
-        lessonAdapter = LessonAdapter(allLessons, assets) { lesson ->
+        lessonAdapter = LessonAdapter(allLessons) { lesson ->
             val intent = Intent(this, LessonActivity::class.java)
             intent.putExtra("lessonId", lesson.id)
             startActivity(intent)
@@ -44,15 +41,9 @@ class MainActivity : ComponentActivity() {
         updateProgressBar()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        clearProgress(this) // Se você quer zerar ao fechar, descomente esta linha
-    }
-
     private fun updateProgressBar() {
         val lessonsCompleted = allLessons.count { lesson ->
-            // AGORA USE lesson.id JUNTO COM it.id (question.id)
-            lesson.questions.all { question -> recoverProgress(this, lesson.id, question.id) } // <--- MUDANÇA AQUI
+            lesson.questions.all { question -> recoverProgress(this, lesson.id, question.id) }
         }
 
         val progress = (lessonsCompleted * 100) / allLessons.size
@@ -62,12 +53,15 @@ class MainActivity : ComponentActivity() {
         val textView = binding.lessonText
         textView.text = lessonsText
 
-        val typeface = Typeface.createFromAsset(assets, "fonts/KGHAPPYSolid.ttf")
-        textView.typeface = typeface
-        textView.setTextColor(Color.YELLOW)
-        textView.setShadowLayer(20f, 0f, 0f, Color.BLACK)
-
-        textView.setDynamicTextSize(lessonsText, 32f, 18f)
+        textView.applyDynamicTitleStyle(
+            textToFit = lessonsText,
+            maxTextSizeSp = 32f,
+            minTextSizeSp = 18f,
+            textColorResId = R.color.yellow,
+            shadowRadius = 20f,
+            shadowColor = Color.BLACK,
+            fontAssetPath = "fonts/KGHAPPYSolid.ttf"
+        )
     }
 
     private fun loadLessons(context: Context): List<Lesson> {
