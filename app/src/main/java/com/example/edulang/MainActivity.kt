@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.edulang.adapter.LessonAdapter
 import com.example.edulang.data.model.Lesson
@@ -12,12 +13,23 @@ import com.example.edulang.databinding.ActivityMainBinding
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.example.edulang.util.Progress.recoverProgress
-import com.example.edulang.util.applyDynamicTitleStyle // Importe a nova função
+import com.example.edulang.util.applyDynamicTitleStyle
 
 class MainActivity : ComponentActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var lessonAdapter: LessonAdapter
     private lateinit var allLessons: List<Lesson>
+    private val lessonLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val updatedLessonId = result.data?.getIntExtra("updatedLessonId", -1) ?: -1
+            if (updatedLessonId != -1) {
+                val index = allLessons.indexOfFirst { it.id == updatedLessonId }
+                if (index != -1) {
+                    lessonAdapter.notifyItemChanged(index)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +39,10 @@ class MainActivity : ComponentActivity() {
         allLessons = loadLessons(this)
 
         val recyclerView = binding.recyclerView
-        lessonAdapter = LessonAdapter(allLessons) { lesson ->
+        lessonAdapter = LessonAdapter(this, allLessons) { lesson ->
             val intent = Intent(this, LessonActivity::class.java)
             intent.putExtra("lessonId", lesson.id)
-            startActivity(intent)
+            lessonLauncher.launch(intent)
         }
         recyclerView.adapter = lessonAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)

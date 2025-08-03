@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.addCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.edulang.adapter.QuestionAdapter
 import com.example.edulang.data.model.Lesson
@@ -20,6 +21,7 @@ class LessonActivity : ComponentActivity()  {
     private lateinit var lessons: List<Lesson>
     private var lessonId: Int = -1
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLessonBinding.inflate(layoutInflater)
@@ -31,6 +33,12 @@ class LessonActivity : ComponentActivity()  {
         updateProgressBar()
         setupLessonUI()
         setupQuestionsList()
+
+        onBackPressedDispatcher.addCallback(this) {
+            // Setando o resultado e encerrando:
+            setResult(RESULT_OK, Intent().putExtra("updatedLessonId", lessonId))
+            finish()
+        }
     }
 
     override fun onResume() {
