@@ -1,86 +1,410 @@
 [
   {
     "id": 1,
-    "title": "Lição 1: Variáveis",
-    "content": "Em linguagens de programação existem variáveis. String armazena textos, Int armazena inteiros, e Double armazena números reais (decimais).",
+    "title": "Lição 1: Conhecendo o Python!",
+    "content": "Bem-vindo ao mundo da programação com Python! Python é como um robô que entende uma linguagem simples. Para fazer o Python nos dar uma mensagem, usamos um comando mágico chamado `print()`. É só colocar a mensagem que você quer dentro dos parênteses e entre aspas. Por exemplo: `print(\"Olá, mundo!\")` para o Python dizer 'Olá, mundo!'.",
     "questions": [
       {
         "id": 1,
-        "questionText": "Qual o tipo da variável: 1?",
+        "questionText": "Qual é o comando mágico em Python para mostrar uma mensagem na tela?",
         "type": "MULTIPLE_CHOICE",
-        "options": ["String", "Int", "Double"],
-        "correctAnswer": "Int"
+        "options": [
+          "show()",
+          "falar()",
+          "print()",
+          "dizer()"
+        ],
+        "correctAnswer": "print()"
       },
       {
         "id": 2,
-        "questionText": "Escreva o tipo da variável: \"dois\"",
+        "questionText": "Para fazer o Python dizer 'Oi!', você usaria a função `print()` com a mensagem entre...",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Chaves `{}`",
+          "Colchetes `[]`",
+          "Sinais de maior e menor `<>`",
+          "Parênteses e aspas `(\" \")`"
+        ],
+        "correctAnswer": "Parênteses e aspas `(\" \")`"
+      },
+      {
+        "id": 3,
+        "questionText": "Em Python, o computador segue as instruções de forma...",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Aleatória",
+          "Exata e na ordem",
+          "Bagunçada",
+          "Somente quando quer"
+        ],
+        "correctAnswer": "Exata e na ordem"
+      },
+      {
+        "id": 4,
+        "questionText": "Qual o código correto para o Python mostrar a frase 'Eu sou um robô!'?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "print Eu sou um robô!",
+          "print(\"Eu sou um robô!\")",
+          "dizer(\"Eu sou um robô!\")",
+          "print('Eu sou um robô!'"
+        ],
+        "correctAnswer": "print(\"Eu sou um robô!\")"
+      },
+      {
+        "id": 5,
+        "questionText": "O nome da linguagem de programação que estamos aprendendo é _________.",
         "type": "TEXT_INPUT",
         "options": null,
-        "correctAnswer": "String"
+        "correctAnswer": "Python"
       }
     ]
   },
-
   {
     "id": 2,
-    "title": "Lição 2: Fundamentos do Python",
-    "content": "Python é uma linguagem de programação conhecida por sua simplicidade e legibilidade. Vamos começar com o básico: exibir mensagens e declarar variáveis.",
+    "title": "Lição 2: A Sequência de Comandos",
+    "content": "A ordem dos comandos é super importante! O Python lê seu código de cima para baixo, linha por linha. Pense nisso como uma receita de bolo: cada passo precisa ser feito na ordem certa. Se você mudar a ordem dos seus `print()`s, a história que o computador conta também vai mudar. `print(\"Passo 1\")` vem antes de `print(\"Passo 2\")`!",
     "questions": [
       {
         "id": 1,
-        "questionText": "Qual a palavra-chave para exibir um texto na tela em Python?",
-        "type": "TEXT_INPUT",
-        "options": null,
-        "correctAnswer": "print"
+        "questionText": "Se você mudar a ordem dos comandos, o que acontece?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "O programa não funciona como esperado",
+          "O computador desliga sozinho",
+          "O programa fica mais rápido",
+          "Não muda nada, o computador entende"
+        ],
+        "correctAnswer": "O programa não funciona como esperado"
       },
       {
         "id": 2,
-        "questionText": "Qual o tipo de dado da variável `preco = 19.99`?",
+        "questionText": "Qual a sequência correta de comandos Python para mostrar 'Primeiro' e depois 'Segundo'?",
         "type": "MULTIPLE_CHOICE",
-        "options": ["int", "str", "float"],
-        "correctAnswer": "float"
+        "options": [
+          "print('Segundo')\nprint('Primeiro')",
+          "print('Primeiro'); print('Segundo')",
+          "print('Primeiro')\nprint('Segundo')",
+          "print('Primeiro', 'Segundo')"
+        ],
+        "correctAnswer": "print('Primeiro')\nprint('Segundo')"
+      },
+      {
+        "id": 3,
+        "questionText": "A sequência de comandos é importante para que o Python siga as instruções na ordem _________.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "correta"
+      },
+      {
+        "id": 4,
+        "questionText": "Um programa Python é uma série de comandos em uma ordem específica. Essa ordem é chamada de...",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Bagunça",
+          "Receita",
+          "Mágica",
+          "Sequência"
+        ],
+        "correctAnswer": "Sequência"
+      },
+      {
+        "id": 5,
+        "questionText": "Em Python, o código é lido de cima para _________.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "baixo"
       }
     ]
   },
   {
     "id": 3,
-    "title": "Lição 3: Condicionais",
-    "content": "Condicionais permitem que o programa tome decisões. A estrutura `if` executa um bloco de código se uma condição for verdadeira. Use `elif` para testar outra condição e `else` para um caso padrão.",
+    "title": "Lição 3: Variáveis (Caixinhas Mágicas)",
+    "content": "Em Python, uma `variável` é como uma caixinha mágica. Você dá um nome para ela (por exemplo, `pontuacao`) e guarda uma informação dentro, usando o sinal de igual (=). Por exemplo: `pontuacao = 100`. A caixinha `pontuacao` agora tem o número 100 guardado! Podemos guardar textos (chamados de `strings`) ou números, e podemos mudar o que está dentro da caixinha a qualquer momento. Variáveis são essenciais!",
     "questions": [
       {
         "id": 1,
-        "questionText": "Qual operador usamos para verificar se dois valores são iguais?",
+        "questionText": "Em Python, uma variável é um lugar para guardar...",
         "type": "MULTIPLE_CHOICE",
-        "options": ["=", "==", "!= "],
-        "correctAnswer": "=="
+        "options": [
+          "Robôs",
+          "Comandos",
+          "Informações",
+          "Músicas"
+        ],
+        "correctAnswer": "Informações"
       },
       {
         "id": 2,
-        "questionText": "Qual palavra-chave usamos para a parte 'senão se' de uma condicional?",
+        "questionText": "Qual o comando correto para guardar o número 50 na variável `pontos`?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "pontos == 50",
+          "guardar(pontos, 50)",
+          "50 = pontos",
+          "pontos = 50"
+        ],
+        "correctAnswer": "pontos = 50"
+      },
+      {
+        "id": 3,
+        "questionText": "Se você escrever `nome = \"Ana\"`, qual tipo de informação você guardou na caixinha?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Um número",
+          "Um texto (string)",
+          "Uma cor",
+          "Uma data"
+        ],
+        "correctAnswer": "Um texto (string)"
+      },
+      {
+        "id": 4,
+        "questionText": "As informações dentro de uma variável em Python podem ser...",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Inalteráveis",
+          "Mudadas a qualquer momento",
+          "Somente números",
+          "Muito grandes"
+        ],
+        "correctAnswer": "Mudadas a qualquer momento"
+      },
+      {
+        "id": 5,
+        "questionText": "Para guardar informações em uma variável, usamos o sinal de _________.",
         "type": "TEXT_INPUT",
         "options": null,
-        "correctAnswer": "elif"
+        "correctAnswer": "igual"
       }
     ]
   },
   {
     "id": 4,
-    "title": "Lição 4: Loops",
-    "content": "Loops são usados para repetir um bloco de código. O loop `while` repete enquanto uma condição for verdadeira, e o loop `for` é usado para iterar sobre uma sequência de itens.",
+    "title": "Lição 4: Condicionais (Decisões)",
+    "content": "O comando `if` (SE) em Python permite que o computador tome decisões. Se a condição dentro do `if` for verdadeira, ele faz algo. Se não for, ele pode seguir para um comando `else` (SENÃO). Por exemplo: `if vidas > 0: print('Você continua no jogo!') else: print('Fim de jogo!')`. Isso faz os programas ficarem mais inteligentes!",
     "questions": [
       {
         "id": 1,
-        "questionText": "Qual loop é mais adequado para repetir uma ação um número fixo de vezes?",
+        "questionText": "Se a variável `pontuacao` for `200`, o que o código a seguir faria?",
         "type": "MULTIPLE_CHOICE",
-        "options": ["while", "for", "if"],
-        "correctAnswer": "for"
+        "options": [
+          "Dizer 'Você ganhou!'",
+          "Dizer 'Tente novamente'",
+          "Não faria nada",
+          "Daria um erro"
+        ],
+        "correctAnswer": "Dizer 'Você ganhou!'"
       },
       {
         "id": 2,
-        "questionText": "O que acontece se a condição de um loop `while` nunca se tornar falsa?",
+        "questionText": "A decisão `if... else` é como uma _________ na programação.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "escolha"
+      },
+      {
+        "id": 3,
+        "questionText": "Qual comando o computador usaria para tomar uma decisão?",
         "type": "MULTIPLE_CHOICE",
-        "options": ["Loop infinito", "Nada", "Nunca começará"],
-        "correctAnswer": "Loop infinito"
+        "options": [
+          "repetir",
+          "fazer",
+          "if / else",
+          "pular"
+        ],
+        "correctAnswer": "if / else"
+      },
+      {
+        "id": 4,
+        "questionText": "O que a palavra `else` significa em Python?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "SE",
+          "ENQUANTO",
+          "SENÃO",
+          "FIM"
+        ],
+        "correctAnswer": "SENÃO"
+      },
+      {
+        "id": 5,
+        "questionText": "A palavra-chave que usamos para iniciar uma decisão é a palavra _________.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "if"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Lição 5: Laços (Loops) de Repetição",
+    "content": "Imagine que você quer dar 10 passos para a frente. Em vez de escrever o comando dez vezes, em Python podemos usar o `for`. Com ele, você diz: `for passo in range(10): print('Vá para a frente')`. Isso faz o computador repetir o comando 10 vezes. Loops são um superpoder para economizar tempo!",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "O que um `for` (loop) faz em Python?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Faz o computador dormir",
+          "Repete um comando várias vezes",
+          "Diz uma piada",
+          "Apaga o código"
+        ],
+        "correctAnswer": "Repete um comando várias vezes"
+      },
+      {
+        "id": 2,
+        "questionText": "Se você quer que seu robô acene 5 vezes, você usaria um _________ de repetição.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "for"
+      },
+      {
+        "id": 3,
+        "questionText": "Um `for` é um atalho para ações que se...",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Dividem",
+          "Complicam",
+          "Repetem",
+          "Mudam"
+        ],
+        "correctAnswer": "Repetem"
+      },
+      {
+        "id": 4,
+        "questionText": "Qual a melhor forma de fazer o robô dizer 'Olá' 3 vezes em Python?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "print('Olá') 3 vezes",
+          "for i in range(3):\n  print('Olá')",
+          "loop 3 vezes: print('Olá')",
+          "Dizer 'Olá' e esperar"
+        ],
+        "correctAnswer": "for i in range(3):\n  print('Olá')"
+      },
+      {
+        "id": 5,
+        "questionText": "Laços de repetição nos ajudam a economizar tempo e _________.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "esforço"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Lição 6: Funções (Comandos Especiais)",
+    "content": "Em Python, podemos criar nossas próprias 'funções'. Uma função é como um atalho que agrupa vários comandos em um único nome. Usamos `def` para criar uma função, por exemplo: `def dancar():` e depois os comandos. Para usar, é só 'chamar' o nome da função: `dancar()`. Isso deixa o código super organizado!",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "Qual a principal utilidade de uma função?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Fazer o computador dormir",
+          "Agrupar vários comandos em um só nome",
+          "Mudar a cor da tela",
+          "Fazer o computador ficar lento"
+        ],
+        "correctAnswer": "Agrupar vários comandos em um só nome"
+      },
+      {
+        "id": 2,
+        "questionText": "Qual palavra-chave usamos para criar uma função em Python?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "function",
+          "define",
+          "def",
+          "funcao"
+        ],
+        "correctAnswer": "def"
+      },
+      {
+        "id": 3,
+        "questionText": "O que você precisa fazer para que os comandos de uma função sejam executados?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Chamar o nome da função",
+          "Gritar o nome da função",
+          "Desenhar um robô",
+          "Esperar o computador adivinhar"
+        ],
+        "correctAnswer": "Chamar o nome da função"
+      },
+      {
+        "id": 4,
+        "questionText": "Uma função nos ajuda a deixar o código mais _________ e fácil de entender.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "organizado"
+      },
+      {
+        "id": 5,
+        "questionText": "Para criar um atalho que agrupe comandos, usamos a palavra-chave _________.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "def"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Lição 7: Listas (Arrays)",
+    "content": "Uma `variável` guarda uma coisa, mas uma `lista` pode guardar várias! Em Python, você cria uma lista com colchetes `[]` e separa os itens com vírgulas, como `compras = ['leite', 'pão', 'ovos']`. Para pegar o primeiro item, você usa o nome da lista e a posição (que começa no 0!): `compras[0]` nos daria 'leite'. Listas são ótimas para guardar coleções de itens, como pontuações de jogos ou nomes de amigos.",
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "O que uma lista guarda em Python?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "Apenas números",
+          "Várias informações em uma ordem",
+          "Apenas uma informação",
+          "Uma música"
+        ],
+        "correctAnswer": "Várias informações em uma ordem"
+      },
+      {
+        "id": 2,
+        "questionText": "Qual seria o código correto para criar uma lista de números `1, 2, 3`?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "numeros = (1, 2, 3)",
+          "numeros = 1, 2, 3",
+          "numeros = {1, 2, 3}",
+          "numeros = [1, 2, 3]"
+        ],
+        "correctAnswer": "numeros = [1, 2, 3]"
+      },
+      {
+        "id": 3,
+        "questionText": "Qual o código para pegar o primeiro item de uma lista chamada `cores`?",
+        "type": "MULTIPLE_CHOICE",
+        "options": [
+          "cores[1]",
+          "cores(1)",
+          "cores[0]",
+          "cores.primeiro"
+        ],
+        "correctAnswer": "cores[0]"
+      },
+      {
+        "id": 4,
+        "questionText": "Listas são úteis para guardar coleções de dados, como os nomes dos jogadores de um _________.",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "time"
+      },
+      {
+        "id": 5,
+        "questionText": "Para encontrar um item em uma lista, você usa a _________ dele na fila. (Dica: em Python a primeira é 0!)",
+        "type": "TEXT_INPUT",
+        "options": null,
+        "correctAnswer": "posição"
       }
     ]
   }
