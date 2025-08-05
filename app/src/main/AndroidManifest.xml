@@ -23,6 +23,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".CourseActivity"
+            android:exported="true"
+            android:theme="@style/Theme.EduLang">
+        </activity>
+
         <activity
             android:name=".QuestionActivity"
             android:exported="true"

@@ -15,12 +15,11 @@ import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflec
 import com.google.gson.Gson
 import com.example.edulang.util.applyDynamicTitleStyle
 
-class LessonActivity : ComponentActivity()  {
+class LessonActivity : ComponentActivity() {
     private lateinit var binding: ActivityLessonBinding
     private lateinit var questionAdapter: QuestionAdapter
     private lateinit var lessons: List<Lesson>
     private var lessonId: Int = -1
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +33,13 @@ class LessonActivity : ComponentActivity()  {
         setupLessonUI()
         setupQuestionsList()
 
+        binding.progressBar.setOnClickListener {
+            val intent = Intent(this, CourseActivity::class.java)
+            intent.putExtra("lessonId", lessonId)
+            startActivity(intent)
+        }
+
         onBackPressedDispatcher.addCallback(this) {
-            // Setando o resultado e encerrando:
             setResult(RESULT_OK, Intent().putExtra("updatedLessonId", lessonId))
             finish()
         }
