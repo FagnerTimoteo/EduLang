@@ -26,6 +26,10 @@ class CourseActivity : ComponentActivity() {
 
         binding.textLessonTitle.text = lesson?.title
         binding.textLessonContent.text = lesson?.content
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun loadLessons(context: Context): List<Lesson> {

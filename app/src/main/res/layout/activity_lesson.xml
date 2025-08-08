@@ -12,6 +12,16 @@
         android:layout_height="wrap_content"
         android:padding="8dp">
 
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Botão de Voltar"
+            android:elevation="4dp"
+            android:background="@android:color/transparent"/>
+
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="@android:style/Widget.ProgressBar.Horizontal"

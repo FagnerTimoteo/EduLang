@@ -43,6 +43,10 @@ class LessonActivity : ComponentActivity() {
             setResult(RESULT_OK, Intent().putExtra("updatedLessonId", lessonId))
             finish()
         }
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onResume() {

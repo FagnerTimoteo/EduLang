@@ -46,6 +46,10 @@ class MainActivity : ComponentActivity() {
         }
         recyclerView.adapter = lessonAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+
+        binding.backButton.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onResume() {

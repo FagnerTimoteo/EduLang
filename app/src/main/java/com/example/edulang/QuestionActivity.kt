@@ -26,6 +26,10 @@ class QuestionActivity : ComponentActivity() {
         binding = ActivityQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+
         // Obtém a questão da Intent
         val lessonId = intent.getIntExtra("lessonId", -1)
         val questionId = intent.getIntExtra("questionId", -1)
